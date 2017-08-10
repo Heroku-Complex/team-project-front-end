@@ -24,17 +24,6 @@ const finalizeOrder = function (data, id) {
   // data.order.products = cart
 
   return $.ajax({
-    url: config.apiOrigin + '/orders/' + id,
-    method: 'PATCH',
-    headers: {
-      Authorization: 'Token token=' + store.user.token
-    },
-    data: data
-  })
-}
-
-const createNewCart = function (data) {
-  return $.ajax({
     url: config.apiOrigin + '/orders',
     method: 'POST',
     headers: {
@@ -46,6 +35,5 @@ const createNewCart = function (data) {
 
 module.exports = {
   makeCharge,
-  finalizeOrder,
-  createNewCart
+  finalizeOrder
 }

@@ -25,9 +25,10 @@ window.addEventListener('popstate', function () {
 
 const onFinalizeOrder = function () {
   const proof = store.proofOfSale
+  const date = new Date()
   const data = {
     "order": {
-  "date_placed": "2017-08-10",
+  "date_placed": date,
   "salesProof": {
     "id": proof.id,
     "amount": proof.amount,
@@ -36,28 +37,13 @@ const onFinalizeOrder = function () {
     },
   "products": [{"product_id": "598b85468dea444f8da1498d", "quantity": 2},{"product_id": "598b85468dea444f8da1498d", "quantity": 2}],
   "isOpen": "false",
-  "_owner": "598b57f6077a458074bf0afe"
-  }
-}
-  const id = "598bb39e699c6896d5fff2a7"
-  console.log(data)
-  api.finalizeOrder(data, id)
-  .then(ui.onFinalizePaymentSuccess)
-  .catch(ui.onFinalizePaymentFailure)
-}
-
-const createNewCart = function () {
-  const data = {
-    "order": {
-  "date_placed": "2017-08-10",
-  "products": [{}],
-  "isOpen": "true",
   "_owner": store.user.id
   }
 }
-  api.createNewCart(data)
-  .then(ui.onCreateNewCartSuccess)
-  .catch(ui.onCreateNewCartFailure)
+  console.log(data)
+  api.finalizeOrder(data)
+  .then(ui.onFinalizePaymentSuccess)
+  .catch(ui.onFinalizePaymentFailure)
 }
 
 const handleToken = function (token) {
@@ -69,7 +55,6 @@ const handleToken = function (token) {
   // on success
     .then(ui.onStripeAPISuccess)
     .then(onFinalizeOrder)
-    .then(createNewCart)
 }
 
 const shutUpAndPayTheMan = function (event) {

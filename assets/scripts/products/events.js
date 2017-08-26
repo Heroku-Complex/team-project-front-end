@@ -70,27 +70,16 @@ const onClearCart = () => {
 
 const onCreateProduct = (event) => {
   event.preventDefault()
-  // const data = getFormFields(event.target)
   const data = {
     'product': {
-      'name': 'Food',
-      'price': '1',
-      'category': 'stuff',
-      'img_url': 'missing',
-      'description': 'stuff',
-      'rating': '1'
+      'name': document.getElementById('create-name').value,
+      'price': document.getElementById('create-price').value,
+      'category': document.getElementById('create-category').value,
+      'img_url': document.getElementById('create-image').value,
+      'description': document.getElementById('create-description').value,
+      'rating': document.getElementById('create-rating').value
     }
   }
-  // const data = {
-  //   'product': {
-  //     'name': document.getElementsByName('create-name') ,
-  //     'price': document.getElementsByName('create-price'),
-  //     'category': document.getElementsByName('create-category'),
-  //     'img_url': document.getElementsByName('create-image'),
-  //     'description': document.getElementsByName('create-description'),
-  //     'rating': document.getElementsByName('create-rating')
-  //   }
-  // }
   console.log(data)
   api.createNewProduct(data)
     .then(ui.createNewProductSuccess)

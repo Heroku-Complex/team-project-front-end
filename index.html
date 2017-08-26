@@ -24,13 +24,14 @@
             <a href="#" id="shoppingCartButton" class="logged-in"> Shopping Cart </a>
             <a href="#" id="orderHistoryButton" class="logged-in"> Order History </a>
             <a href="#" id="returnToProducts" class="logged-in"> Home </a>
+            <a href="#" id="adminSeller" class="logged-in"> Seller Menu </a>
             <a href="#" data-toggle="modal" data-target="#changePwModal">Change Password</a>
             <!-- <a href="#" data-target="#sign-out">sign out</a> -->
           </div>
     </div>
     <nav>
       <div class='logo'>
-        <h1>Fencer</h1>
+        <a href="#" id="returnToProducts" class="logged-in">         <h1>Fencer</h1> </a>
         <h2>A Galactic Martketplace for Legitimately Acquired Goods</h2>
         <h4 id="UiFailure" class="error-msg"></h4>
         <h4 id="UiSuccess" class="success-msg"></h4>
@@ -142,11 +143,114 @@
             </th>
           </tr>
         </thead>
-        <!-- this empty tbody coupling is where the shoppingCart is appended. This is necessary to refresh the list. -->
         <tbody>
         </tbody>
         <tfoot> </tfoot>
       </table>
+    </div>
+  </div>
+
+    <div class="productListAdmin logged-in">
+      <table id="productTableAdmin" class="table" data-toggle="table" data-sort-name="title" data-sort-order="desc">
+        <thead>
+          <tr>
+            <th data-field="image" data-sortable="false">
+              Image
+            </th>
+            <th data-field="name" data-sortable="true">
+              Name
+            </th>
+            <th data-field="price" data-sortable="true">
+              Price
+            </th>
+            <th data-field="category" data-sortable="true">
+              Category
+            </th>
+            <th data-field="description" data-sortable="false">
+              Description
+            </th>
+            <th data-field="rating" data-sortable="false">
+              Rating
+            </th>
+            <th data-field="edit-delete" data-sortable="false">
+              Edit/Delete
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        <tfoot>
+          <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th><button type="button" name="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#createProductModal">Create New Product</button></th>
+        </tr>
+        </tfoot>
+      </table>
+    </div>
+
+  <div class="modal fade bs-edit-delete" id="editDeleteModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog modal-sm">
+
+      <div class="modal-content">
+
+        <form id="product-edit">
+
+          <fieldset>
+
+            <legend>Edit or Delete Product</legend>
+
+            <p>Keep inputs 50 characters or less.</p>
+
+            <textarea class="form-control" id="image-link" maxlength="200"></textarea>
+
+            <textarea class="form-control" id="name-text" maxlength="200"></textarea>
+
+            <textarea class="form-control" id="description-text" maxlength="200"></textarea>
+
+            <textarea class="form-control" id="category-text" maxlength="200"></textarea>
+
+            <input min="1" max="9999" class='form-control' type="number" id="price-number" name='price-form' value="1">
+
+            <input min="1" max="5" class='form-control' type="number" id="rating-number" name='rating-form' value="1">
+
+            <button id="save-name-edit" name="name_generator" type="submit" data-dismiss="modal">Save Edits</button>
+
+            <button id="delete-name" type="button" class="btn btn-primary" data-dismiss="modal">Delete Product</button>
+
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="createProductModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Create Product</h4>
+        </div>
+        <div class="modal-body">
+          <form id="create-post">
+            <fieldset>
+              <span class="star-required">*</span>&nbsp;&nbsp;<input class='pop-up-fields text-field text-field-product' type='text' placeholder='Image Url' name='credentials[image]'> <br> <br>
+              <span  class="star-required">*</span>&nbsp;&nbsp;<input class='pop-up-fields text-field text-field-product' type='text' placeholder='Product Name' name='credentials[name]'><br> <br>
+              <span  class="star-required">*</span>&nbsp;&nbsp;<input class='pop-up-fields text-field text-field-product' type='number' placeholder='Price as a Number' name='credentials[price]'><br> <br>
+              <span  class="star-required">*</span>&nbsp;&nbsp;<input class='pop-up-fields text-field text-field-product' type='text' placeholder='Category' name='credentials[category]'><br> <br>
+              <span class="star-required">*</span>&nbsp;&nbsp;<input class='pop-up-fields text-field text-field-product' type='text' placeholder='Description' name='credentials[description]'><br><br>
+              <span class="star-required">*</span>&nbsp;&nbsp;<input class='pop-up-fields text-field text-field-product' min="1" max="5" type="number" value="1" name='credentials[rating]'><br><br>
+              <button class="btn btn-primary btn-lg" type="submit">Sign up</button>
+            </fieldset><br>
+            <div class="sign-up-error-msg error-msg"></div>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -189,6 +293,7 @@
       </div>
     </div>
    </div>
+
   <table id="cartTable" class="table" data-toggle="table" data-sort-name="title" data-sort-order="desc">
     <thead>
       <tr>

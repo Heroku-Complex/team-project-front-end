@@ -20,12 +20,14 @@ const onProductsMenuButton = () => {
   $('#cartPage').hide()
   $('#checkoutPage').hide()
   $('.previousOrderList').hide()
+  $('.productListAdmin').hide()
 }
 const onOrderHistoryButton = () => {
   $('.landingPage').hide()
   $('#cartPage').hide()
   $('#checkoutPage').hide()
   $('.previousOrderList').show()
+  $('.productListAdmin').hide()
 }
 
 const onShoppingCartMenuButton = () => {
@@ -33,18 +35,28 @@ const onShoppingCartMenuButton = () => {
   $('#cartPage').show()
   $('#checkoutPage').hide()
   $('.previousOrderList').hide()
+  $('.productListAdmin').hide()
 }
 
 const onCheckoutMenuButton = () => {
   $('.landingPage').hide()
   $('#cartPage').hide()
   $('#checkoutPage').show()
+  $('.productListAdmin').hide()
+}
+
+const onSellerMenuButton = () => {
+  $('.landingPage').hide()
+  $('#cartPage').hide()
+  $('#checkoutPage').hide()
+  $('.productListAdmin').show()
 }
 
 const onBackToCartButton = () => {
   $('.landingPage').hide()
   $('#cartPage').show()
   $('#checkoutPage').hide()
+  $('.productListAdmin').hide()
 }
 
 const onClearCart = () => {
@@ -71,6 +83,7 @@ const addHandlers = () => {
   $('#buttonBack').on('click', onBackToCartButton)
   $('#buttonClearCart').on('click', onClearCart)
   $('#buttonBackToShopping').on('click', onBackToShopping)
+  $('#adminSeller').on('click', onSellerMenuButton)
 }
 
 module.exports = {

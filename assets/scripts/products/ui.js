@@ -8,6 +8,7 @@ const ordersAPI = require('../orders/api')
 const stripeEvents = require('../stripe/events')
 
 const showProductsTemplate = require('../templates/products.handlebars')
+const showAdminProductsTemplate = require('../templates/products-admin.handlebars')
 const showCartTemplate = require('../templates/cart.handlebars')
 const showCheckoutTemplate = require('../templates/checkout-cart.handlebars')
 // const orderApi = require('../orders/api')
@@ -102,6 +103,7 @@ const pushItemsToCart = function () {
 
 const showAllProductsSuccess = function (data) {
   store.products = data.products
+  console.log(data)
   const showProductsHTML = showProductsTemplate({ products: data.products })
   $('#productTable').show()
   $('#productTable tbody').empty()

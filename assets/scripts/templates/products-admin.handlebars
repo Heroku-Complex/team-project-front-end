@@ -1,0 +1,35 @@
+{{#each products as |product|}}
+
+<!-- this is the handlebars for products when the page loads. Products will
+be displayed, through this mechanism, on the landingPage -->
+<tr>
+
+<td><img class="thumbnail" src={{product.img_url}}></img></td>
+ <td><p>{{product.name}}</p></td>
+ <td><p>${{product.price}}</p></td>
+ <td><p>{{product.category}}</p></td>
+ <td><p>{{product.description}}</p></td>
+ <td><p>{{product.rating}} Glarbles</p></td>
+
+
+<!-- Add to cart form with a hidden input that contains the product id and an input
+for quanity. When submitted, this form will trigger a function to add the
+item with the specified quanity to the shopping cart -->
+
+<td>
+  <!-- <form class="editDelete">
+    <fieldset>
+      <input value="{{product.id}}" class='text-field' type="hidden" name='id'><br> <br>
+      <input value="{{product.id}}" class='text-field' type="hidden" name='price'><br> <br>
+      <button class="btn btn-primary btn-lg" type="submit">Add to Cart</button>
+    </fieldset><br>
+    <div></div>
+  </form> -->
+  <a class="load-edit-btn btn" data-toggle="modal" data-target=".bs-edit-delete" href="#"
+    class="list-group-item list-group-item-action" id="{{favorite.id}}">Edit or Delete</a>
+
+</td>
+</tr>
+
+
+{{/each}}

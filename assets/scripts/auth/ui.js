@@ -24,6 +24,10 @@ const signInSuccess = (data) => {
   $('.previousOrderList').hide()
   $('.pastOrder').remove()
   $('.greeting').text('welcome back, ' + data.user.email)
+  $('.productListAdmin').hide()
+  if (data.user.admin !== true) {
+    $('#adminSeller').hide()
+  }
 }
 
 const signInFailure = () => {

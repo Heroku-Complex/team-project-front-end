@@ -118,6 +118,20 @@ const showAllProductsFailure = function () {
   // $('#UiFailure').text('something went wrong')
 }
 
+const sellerAdmin = function (data) {
+  const sellerProducts = []
+  for (let i = 0; i < store.products.length; i++) {
+    if (store.products[i]._owner === store.user.id) {
+      sellerProducts.push(store.products[i])
+    }
+  }
+  console.log('Seller products are', sellerProducts)
+  const showProductsHTML = showAdminProductsTemplate({ products: sellerProducts })
+  $('#productTableAdmin').show()
+  $('#productTableAdmin tbody').empty()
+  $('#productTableAdmin tbody').append(showProductsHTML)
+}
+
 // create a cart if there isn't one and if there is one then send a patch request to update the existing cart
 const carriageBoy = () => {
   if (!store.currentOrder) {
@@ -155,12 +169,25 @@ const updateExistingCart = () => {
 const onUpdateExisitingCartSuccess = () => {
   $('#UiSuccess').text('Your cart has been updated').fadeIn('fast').delay(3000).fadeOut('slow')
 }
+
 const onUpdateExisitingCartFailure = () => {
   $('#UiFailure').text('Oops! Something went wrong!').fadeIn('fast').delay(3000).fadeOut('slow')
 }
+
+const createNewProductSuccess = (data) => {
+  console.log('Success', data)
+}
+
+const createNewProductFailure = (data) => {
+  console.log('Success', data)
+}
+
 module.exports = {
   showAllProductsSuccess,
   showAllProductsFailure,
   carriageBoy,
-  pushItemsToCart
+  pushItemsToCart,
+  sellerAdmin,
+  createNewProductSuccess,
+  createNewProductFailure
 }

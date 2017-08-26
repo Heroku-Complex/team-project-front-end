@@ -15,7 +15,19 @@ const showAllProducts = function () {
   })
 }
 
+const createNewProduct = function (data) {
+  return $.ajax({
+    url: config.apiOrigin + '/products',
+    method: 'POST',
+    headers: {
+      Authorization: 'Token token=' + store.user.token
+    },
+    data: data
+  })
+}
+
 module.exports = {
-  showAllProducts
+  showAllProducts,
+  createNewProduct
 
 }

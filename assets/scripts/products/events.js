@@ -4,6 +4,7 @@ const ui = require('./ui')
 const store = require('../store')
 const ordersAPI = require('../orders/api')
 const stripeEvents = require('../stripe/events')
+const getFormFields = require('../../../lib/get-form-fields')
 
 // show the product catalog on the landing page, this function is called on
 // sign in
@@ -67,6 +68,35 @@ const onClearCart = () => {
     .then(ui.pushItemsToCart)
 }
 
+const onCreateProduct = (event) => {
+  event.preventDefault()
+  // const data = getFormFields(event.target)
+  const data = {
+    'product': {
+      'name': 'Food',
+      'price': '1',
+      'category': 'stuff',
+      'img_url': 'missing',
+      'description': 'stuff',
+      'rating': '1'
+    }
+  }
+  // const data = {
+  //   'product': {
+  //     'name': document.getElementsByName('create-name') ,
+  //     'price': document.getElementsByName('create-price'),
+  //     'category': document.getElementsByName('create-category'),
+  //     'img_url': document.getElementsByName('create-image'),
+  //     'description': document.getElementsByName('create-description'),
+  //     'rating': document.getElementsByName('create-rating')
+  //   }
+  // }
+  console.log(data)
+  api.createNewProduct(data)
+    .then(ui.createNewProductSuccess)
+    .then(ui.createNewProductFailure)
+}
+
 const onBackToShopping = () => {
   $('.landingPage').show()
   $('#productTable').show()
@@ -84,6 +114,7 @@ const addHandlers = () => {
   $('#buttonClearCart').on('click', onClearCart)
   $('#buttonBackToShopping').on('click', onBackToShopping)
   $('#adminSeller').on('click', onSellerMenuButton)
+  $('#create-product').on('submit', onCreateProduct)
 }
 
 module.exports = {

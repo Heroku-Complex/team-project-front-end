@@ -219,9 +219,9 @@
 
             <input min="1" max="5" class='form-control' type="number" id="rating-number" name='rating-form' value="1">
 
-            <button id="save-name-edit" name="name_generator" type="submit" data-dismiss="modal">Save Edits</button>
+            <button id="save-name-edit" name="save-edits" type="submit" data-dismiss="modal">Save Edits</button>
 
-            <button id="delete-name" type="button" class="btn btn-primary" data-dismiss="modal">Delete Product</button>
+            <button id="delete-product" type="button" class="btn btn-primary" data-dismiss="modal">Delete Product</button>
 
           </fieldset>
         </form>
@@ -237,15 +237,23 @@
           <h4 class="modal-title" id="myModalLabel">Create Product</h4>
         </div>
         <div class="modal-body">
-          <form id="create-post">
+          <form id="create-product">
             <fieldset>
-              <span class="star-required">*</span>&nbsp;&nbsp;<input class='pop-up-fields text-field text-field-product' type='text' placeholder='Image Url' name='credentials[image]'> <br> <br>
-              <span  class="star-required">*</span>&nbsp;&nbsp;<input class='pop-up-fields text-field text-field-product' type='text' placeholder='Product Name' name='credentials[name]'><br> <br>
-              <span  class="star-required">*</span>&nbsp;&nbsp;<input class='pop-up-fields text-field text-field-product' type='number' placeholder='Price as a Number' name='credentials[price]'><br> <br>
-              <span  class="star-required">*</span>&nbsp;&nbsp;<input class='pop-up-fields text-field text-field-product' type='text' placeholder='Category' name='credentials[category]'><br> <br>
-              <span class="star-required">*</span>&nbsp;&nbsp;<input class='pop-up-fields text-field text-field-product' type='text' placeholder='Description' name='credentials[description]'><br><br>
-              <span class="star-required">*</span>&nbsp;&nbsp;<input class='pop-up-fields text-field text-field-product' min="1" max="5" type="number" value="1" name='credentials[rating]'><br><br>
-              <button class="btn btn-primary btn-lg" type="submit">Sign up</button>
+
+              Image url<span class="star-required">*</span>&nbsp;&nbsp;<input class='pop-up-fields text-field text-field-product' type='text' placeholder='Image Url' name='create-image'> <br> <br>
+
+              Name<span  class="star-required">*</span>&nbsp;&nbsp;<input class='pop-up-fields text-field text-field-product' type='text' placeholder='Product Name' name='create-name'><br> <br>
+
+              Price<span  class="star-required">*</span>&nbsp;&nbsp;<input class='pop-up-fields text-field text-field-product' type='number' placeholder='Price as a Number' name='create-price'><br> <br>
+
+              Category<span  class="star-required">*</span>&nbsp;&nbsp;<input class='pop-up-fields text-field text-field-product' type='text' placeholder='Category' name='create-category'><br> <br>
+
+              Description<span class="star-required">*</span>&nbsp;&nbsp;<input class='pop-up-fields text-field text-field-product' type='text' placeholder='Description' name='create-description'><br><br>
+
+              Rating<span class="star-required">*</span>&nbsp;&nbsp;<input class='pop-up-fields text-field text-field-product' min="1" max="5"
+              placeholder='Rating in Garbles' type="number" value="1" name='create-rating'><br><br>
+
+              <button class="btn btn-primary btn-lg" type="submit">Create Product</button>
             </fieldset><br>
             <div class="sign-up-error-msg error-msg"></div>
           </form>

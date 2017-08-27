@@ -88,22 +88,29 @@ const onCreateProduct = (event) => {
 
 const onEditProduct = (event) => {
   event.preventDefault()
-  let data = event.relatedTarget
+  const id = document.getElementById('id-store').value
+  const url = document.getElementById('image-link').value
+  const name = document.getElementById('name-text').value
+  const description = document.getElementById('description-text').value
+  const category = document.getElementById('category-text').value
+  const price = document.getElementById('price-number').value
+  const rating = document.getElementById('rating-number').value
 
-  // const data = {
-  //   'product': {
-  //     'name': document.getElementById('create-name').value,
-  //     'price': document.getElementById('create-price').value,
-  //     'category': document.getElementById('create-category').value,
-  //     'img_url': document.getElementById('create-image').value,
-  //     'description': document.getElementById('create-description').value,
-  //     'rating': document.getElementById('create-rating').value
-  //   }
-  // }
+  const data = {
+    'product': {
+      'name': name,
+      'price': price,
+      'category': category,
+      'img_url': url,
+      'description': description,
+      'rating': rating
+    }
+  }
   console.log('This is', data)
-  // api.createNewProduct(data)
-  //   .then(ui.createNewProductSuccess)
-  //   .then(ui.createNewProductFailure)
+  console.log('This is', id)
+  api.createNewProduct(data, id)
+    .then(ui.updateProductSuccess)
+    .then(ui.updateProductFailure)
 }
 
 const onBackToShopping = () => {
@@ -135,10 +142,11 @@ const addHandlers = () => {
         document.getElementById('category-text').value = store.products[i].category
         document.getElementById('price-number').value = store.products[i].price
         document.getElementById('rating-number').value = store.products[i].rating
+        document.getElementById('id-store').value = store.products[i].id
       }
     }
   })
-  $('#save-name-edit').on('click', onEditProduct)
+  $('#save-product-edit').on('click', onEditProduct)
 }
 
 module.exports = {

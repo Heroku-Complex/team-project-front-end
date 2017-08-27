@@ -26,8 +26,19 @@ const createNewProduct = function (data) {
   })
 }
 
+const updateProduct = function (data, id) {
+  return $.ajax({
+    url: config.apiOrigin + '/products/' + id,
+    method: 'PATCH',
+    headers: {
+      Authorization: 'Token token=' + store.user.token
+    },
+    data
+  })
+}
+
 module.exports = {
   showAllProducts,
-  createNewProduct
-
+  createNewProduct,
+  updateProduct
 }

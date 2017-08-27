@@ -177,11 +177,19 @@ const onUpdateExisitingCartFailure = () => {
 const createNewProductSuccess = (data) => {
   $('#createProductModal').modal('hide')
   $('.text-field-product').val('')
-  $('#UiSuccess').text('Create successful now log in and start shopping.').fadeIn('fast').delay(5000).fadeOut('slow')
+  $('#UiSuccess').text('Create successful, now make more.').fadeIn('fast').delay(5000).fadeOut('slow')
 }
 
 const createNewProductFailure = (data) => {
   console.log('Success', data)
+}
+
+const updateProductSuccess = data => {
+  $('#UiSuccess').text('Update successful now make more products.').fadeIn('fast').delay(5000).fadeOut('slow')
+}
+
+const updateProductFailure = data => {
+
 }
 
 module.exports = {
@@ -191,5 +199,7 @@ module.exports = {
   pushItemsToCart,
   sellerAdmin,
   createNewProductSuccess,
-  createNewProductFailure
+  createNewProductFailure,
+  updateProductSuccess,
+  updateProductFailure
 }

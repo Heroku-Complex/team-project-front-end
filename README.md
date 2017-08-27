@@ -49,6 +49,22 @@ Managing pull requests and merges was another challenge we faced.  Despite our c
 
 ### ADMIN
 
-The admin abilities is created on the backend but allows the user to access
-certain menues unavailable to other users. This will allow the user to edit,
-create, or delete products as nescessary. 
+The admin abilities is a status created on the backend but allows the user to access certain menues unavailable to other users. This will allow the user to edit, create, or delete products as nescessary that the user has ownership of. This is, infact, giving a user the ability to sell products through our shop.
+
+An admin with this ability will not be able to touch other products that other
+admins create, but still display their wears and allow for purchase. The user stories are as follows:
+
+As a admin user, I would like to be able to:
+    * Create products with that fit the requirements of the product schema.
+    * Be able to disable the products that I sell without deleting them.
+    * Be able to delete my items off the database. (This one I would not actually include normally, but as the story behind Fencer is that we are selling 'acquired goods', a full delete is viable though not recommended).
+    * If a user purchased a deleted item, I want it to display something else in line with the story of Fencer.
+    * I want to be able to update my items in and see the effects of the update in real time.
+    * I want to see my creations uploaded in realtime.
+    * I do want to be able to see all my current products and be able to discern if my product is active or currently disabled.
+
+The wireframe for the admin menus are in the links below:
+  Main data table:https://goo.gl/photos/S6zNCtRkAexzF7GS6
+  Modals:https://goo.gl/photos/kZBjqYKqyr6knqfd6
+
+As an admin, you can select an item and set it to inactive inside of the edit modal. Saving it in that status will then disable that item from any users products page, as well as boot it from their carts. Deleting a product will have the same affect.

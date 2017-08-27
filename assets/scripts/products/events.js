@@ -80,7 +80,6 @@ const onCreateProduct = (event) => {
       'rating': document.getElementById('create-rating').value
     }
   }
-  console.log(data)
   api.createNewProduct(data)
     .then(ui.createNewProductSuccess)
     .then(api.showAllProducts)

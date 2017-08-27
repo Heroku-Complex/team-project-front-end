@@ -1,7 +1,6 @@
 'use strict'
 
 const store = require('../store')
-// const cart = require('../cart')
 const api = require('../stripe/api')
 const ui = require('../stripe/ui')
 const ordersAPI = require('../orders/api')
@@ -77,6 +76,31 @@ const populateCheckout = function (event) {
 }
 
 const pushItemsToCart = function () {
+  const cartFix = []
+
+  store.cart.forEach(function (item) {
+    for (var i = 0; i < store.products.length; i++) {
+      if (store.products[i].id === item.product_id &&
+        store.products[i].status !== 'hidden') {
+          cartFix.push(item)
+        }
+    }
+  })
+  console.log('cartfix is', cartFix)
+  store.cart = cartFix
+  const id = store.currentOrder.id
+  if (store.cart.length === 0) {
+    // api request here delete
+    // create api
+  }
+  // else
+  const data = {
+    'order': {
+      'products': store.cart
+    }
+  }
+
+  api.finalizeOrder(data, id)
   store.total = 0
   const filteredData = productData.products.filter(function (item) {
     for (let i = 0; i < store.cart.length; i++) {
@@ -88,7 +112,6 @@ const pushItemsToCart = function () {
       }
     }
   })
-
   const showCartHTML = showCartTemplate({ products: filteredData })
   $('#cartTable tbody').empty()
   $('#cartTable tbody').append(showCartHTML)
@@ -104,7 +127,6 @@ const pushItemsToCart = function () {
 const showAllProductsSuccess = function (data) {
   store.products = []
   store.products = data.products
-  console.log(data)
   const showProductsHTML = showProductsTemplate({ products: data.products })
   $('#productTable').show()
   $('#productTable tbody').empty()
@@ -126,7 +148,6 @@ const sellerAdmin = function (data) {
       sellerProducts.push(store.products[i])
     }
   }
-  console.log('Seller products are', sellerProducts)
   const showProductsHTML = showAdminProductsTemplate({ products: sellerProducts })
   $('#productTableAdmin tbody').empty()
   $('#productTableAdmin').show()
@@ -210,6 +231,7 @@ module.exports = {
   sellerAdmin,
   createNewProductSuccess,
   createNewProductFailure,
+  updateExistingCart,
   updateProductSuccess,
   updateProductFailure,
   deleteProductSuccess,

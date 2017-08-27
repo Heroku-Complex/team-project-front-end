@@ -35,7 +35,6 @@ const addOrder = function (data) {
 // This also fires when you submit an order, it sets the date the order was
 // placed and it changes the isOpen value to false.
 const updateOrder = function (data) {
-
   data.order.products = cart
   return $.ajax({
     url: config.apiOrigin + '/orders/' + data.order.id,

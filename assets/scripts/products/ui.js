@@ -82,11 +82,10 @@ const pushItemsToCart = function () {
     for (var i = 0; i < store.products.length; i++) {
       if (store.products[i].id === item.product_id &&
         store.products[i].status !== 'hidden') {
-          cartFix.push(item)
-        }
+        cartFix.push(item)
+      }
     }
   })
-  console.log('cartfix is', cartFix)
   store.cart = cartFix
   const id = store.currentOrder.id
   if (store.cart.length === 0) {
@@ -204,7 +203,7 @@ const createNewProductSuccess = (data) => {
 }
 
 const createNewProductFailure = (data) => {
-  console.log('Success', data)
+  $('#UiFailure').text('Oops! Something went wrong!').fadeIn('fast').delay(3000).fadeOut('slow')
 }
 
 const updateProductSuccess = data => {

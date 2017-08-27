@@ -4,8 +4,6 @@ const ui = require('./ui')
 const store = require('../store')
 const ordersAPI = require('../orders/api')
 const stripeEvents = require('../stripe/events')
-const getFormFields = require('../../../lib/get-form-fields')
-
 // show the product catalog on the landing page, this function is called on
 // sign in
 const onShowAllProducts = function (event) {
@@ -51,6 +49,7 @@ const onSellerMenuButton = () => {
   $('#cartPage').hide()
   $('#checkoutPage').hide()
   $('.productListAdmin').show()
+  $('.previousOrderList').hide()
 }
 
 const onBackToCartButton = () => {
@@ -160,6 +159,7 @@ const onBackToShopping = () => {
 
 const addHandlers = () => {
   $('#returnToProducts').on('click', onProductsMenuButton)
+  $('#returnToProductsLogo').on('click', onProductsMenuButton)
   $('#shoppingCartButton').on('click', onShoppingCartMenuButton)
   $('#orderHistoryButton').on('click', onOrderHistoryButton)
   $('#buttonProceedCheckout').on('click', onCheckoutMenuButton)

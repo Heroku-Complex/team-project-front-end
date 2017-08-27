@@ -86,6 +86,26 @@ const onCreateProduct = (event) => {
     .then(ui.createNewProductFailure)
 }
 
+const onEditProduct = (event) => {
+  event.preventDefault()
+  let data = event.relatedTarget
+
+  // const data = {
+  //   'product': {
+  //     'name': document.getElementById('create-name').value,
+  //     'price': document.getElementById('create-price').value,
+  //     'category': document.getElementById('create-category').value,
+  //     'img_url': document.getElementById('create-image').value,
+  //     'description': document.getElementById('create-description').value,
+  //     'rating': document.getElementById('create-rating').value
+  //   }
+  // }
+  console.log('This is', data)
+  // api.createNewProduct(data)
+  //   .then(ui.createNewProductSuccess)
+  //   .then(ui.createNewProductFailure)
+}
+
 const onBackToShopping = () => {
   $('.landingPage').show()
   $('#productTable').show()
@@ -104,6 +124,21 @@ const addHandlers = () => {
   $('#buttonBackToShopping').on('click', onBackToShopping)
   $('#adminSeller').on('click', onSellerMenuButton)
   $('#create-product').on('submit', onCreateProduct)
+  // $('.list-group-item').on('click', onEditProduct)
+  $('#editDeleteModal').on('show.bs.modal', function (event) {
+    const converter = $(event.relatedTarget)
+    for (let i = 0; i < store.products.length; i++) {
+      if (store.products[i].id === converter[0].id) {
+        document.getElementById('image-link').value = store.products[i].img_url
+        document.getElementById('name-text').value = store.products[i].name
+        document.getElementById('description-text').value = store.products[i].description
+        document.getElementById('category-text').value = store.products[i].category
+        document.getElementById('price-number').value = store.products[i].price
+        document.getElementById('rating-number').value = store.products[i].rating
+      }
+    }
+  })
+  $('#save-name-edit').on('click', onEditProduct)
 }
 
 module.exports = {

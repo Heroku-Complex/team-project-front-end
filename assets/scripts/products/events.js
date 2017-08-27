@@ -83,7 +83,7 @@ const onCreateProduct = (event) => {
   console.log(data)
   api.createNewProduct(data)
     .then(ui.createNewProductSuccess)
-    .then(ui.createNewProductFailure)
+    .catch(ui.createNewProductFailure)
 }
 
 const onEditProduct = (event) => {
@@ -106,11 +106,35 @@ const onEditProduct = (event) => {
       'rating': rating
     }
   }
-  console.log('This is', data)
-  console.log('This is', id)
-  api.createNewProduct(data, id)
+  api.updateProduct(data, id)
     .then(ui.updateProductSuccess)
-    .then(ui.updateProductFailure)
+    .catch(ui.updateProductFailure)
+}
+
+const onDeleteProduct = (event) => {
+  event.preventDefault()
+  const id = document.getElementById('id-store').value
+  const url = document.getElementById('image-link').value
+  const name = document.getElementById('name-text').value
+  const description = document.getElementById('description-text').value
+  const category = document.getElementById('category-text').value
+  const price = document.getElementById('price-number').value
+  const rating = document.getElementById('rating-number').value
+
+  const data = {
+    'product': {
+      'name': name,
+      'price': price,
+      'category': category,
+      'img_url': url,
+      'description': description,
+      'rating': rating
+    }
+  }
+  api.updateProduct(data, id)
+  api.deleteProduct(data, id)
+    .then(ui.updateProductSuccess)
+    .catch(ui.updateProductFailure)
 }
 
 const onBackToShopping = () => {
@@ -147,6 +171,7 @@ const addHandlers = () => {
     }
   })
   $('#save-product-edit').on('click', onEditProduct)
+  $('#delete-product').on('click', onDeleteProduct)
 }
 
 module.exports = {

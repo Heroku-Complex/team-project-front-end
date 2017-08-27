@@ -37,8 +37,20 @@ const updateProduct = function (data, id) {
   })
 }
 
+const deleteProduct = (data, id) => {
+  return $.ajax({
+    url: config.apiOrigin + '/products/' + id,
+    method: 'DELETE',
+    headers: {
+      Authorization: 'Token token=' + store.user.token
+    },
+    data
+  })
+}
+
 module.exports = {
   showAllProducts,
   createNewProduct,
-  updateProduct
+  updateProduct,
+  deleteProduct
 }

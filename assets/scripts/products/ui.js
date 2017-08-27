@@ -102,6 +102,7 @@ const pushItemsToCart = function () {
 }
 
 const showAllProductsSuccess = function (data) {
+  store.products = []
   store.products = data.products
   console.log(data)
   const showProductsHTML = showProductsTemplate({ products: data.products })
@@ -127,6 +128,7 @@ const sellerAdmin = function (data) {
   }
   console.log('Seller products are', sellerProducts)
   const showProductsHTML = showAdminProductsTemplate({ products: sellerProducts })
+  $('#productTableAdmin tbody').empty()
   $('#productTableAdmin').show()
   $('#productTableAdmin tbody').empty()
   $('#productTableAdmin tbody').append(showProductsHTML)
@@ -189,7 +191,15 @@ const updateProductSuccess = data => {
 }
 
 const updateProductFailure = data => {
+  $('#UiFailure').text('Oops! Something went wrong!').fadeIn('fast').delay(3000).fadeOut('slow')
+}
 
+const deleteProductSuccess = (data) => {
+  $('#UiSuccess').text('Delte successful now make more products.').fadeIn('fast').delay(5000).fadeOut('slow')
+}
+
+const deleteProductFailure = (data) => {
+  $('#UiFailure').text('Oops! Something went wrong!').fadeIn('fast').delay(3000).fadeOut('slow')
 }
 
 module.exports = {
@@ -201,5 +211,7 @@ module.exports = {
   createNewProductSuccess,
   createNewProductFailure,
   updateProductSuccess,
-  updateProductFailure
+  updateProductFailure,
+  deleteProductSuccess,
+  deleteProductFailure
 }

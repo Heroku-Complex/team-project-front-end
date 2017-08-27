@@ -76,6 +76,7 @@ const onCreateProduct = (event) => {
       'price': document.getElementById('create-price').value,
       'category': document.getElementById('create-category').value,
       'img_url': document.getElementById('create-image').value,
+      'status': 'default-status',
       'description': document.getElementById('create-description').value,
       'rating': document.getElementById('create-rating').value
     }
@@ -83,6 +84,9 @@ const onCreateProduct = (event) => {
   console.log(data)
   api.createNewProduct(data)
     .then(ui.createNewProductSuccess)
+    .then(api.showAllProducts)
+    .then(ui.showAllProductsSuccess)
+    .then(ui.sellerAdmin)
     .catch(ui.createNewProductFailure)
 }
 
@@ -95,6 +99,7 @@ const onEditProduct = (event) => {
   const category = document.getElementById('category-text').value
   const price = document.getElementById('price-number').value
   const rating = document.getElementById('rating-number').value
+  const status = document.getElementById('status-check').value
 
   const data = {
     'product': {
@@ -102,12 +107,16 @@ const onEditProduct = (event) => {
       'price': price,
       'category': category,
       'img_url': url,
+      'status': status,
       'description': description,
       'rating': rating
     }
   }
   api.updateProduct(data, id)
     .then(ui.updateProductSuccess)
+    .then(api.showAllProducts)
+    .then(ui.showAllProductsSuccess)
+    .then(ui.sellerAdmin)
     .catch(ui.updateProductFailure)
 }
 
@@ -127,14 +136,18 @@ const onDeleteProduct = (event) => {
       'price': price,
       'category': category,
       'img_url': url,
+      'status': status,
       'description': description,
       'rating': rating
     }
   }
   api.updateProduct(data, id)
   api.deleteProduct(data, id)
-    .then(ui.updateProductSuccess)
-    .catch(ui.updateProductFailure)
+    .then(ui.deleteProductSuccess)
+    .then(api.showAllProducts)
+    .then(ui.showAllProductsSuccess)
+    .then(ui.sellerAdmin)
+    .catch(ui.deleteProductFailure)
 }
 
 const onBackToShopping = () => {
@@ -167,6 +180,7 @@ const addHandlers = () => {
         document.getElementById('price-number').value = store.products[i].price
         document.getElementById('rating-number').value = store.products[i].rating
         document.getElementById('id-store').value = store.products[i].id
+        document.getElementById('status-check').value = store.products[i].status
       }
     }
   })

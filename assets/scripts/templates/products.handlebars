@@ -2,7 +2,7 @@
 
 <!-- this is the handlebars for products when the page loads. Products will
 be displayed, through this mechanism, on the landingPage -->
-<tr>
+<tr class="product-row {{product.status}}">
 
 <td><img class="thumbnail" src={{product.img_url}}></img></td>
  <td><p>{{product.name}}</p></td>

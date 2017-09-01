@@ -1,13 +1,13 @@
 'use strict'
 
 const store = require('../store')
-// const cart = require('../cart')
 const api = require('../stripe/api')
 const ui = require('../stripe/ui')
 const ordersAPI = require('../orders/api')
 const stripeEvents = require('../stripe/events')
 
 const showProductsTemplate = require('../templates/products.handlebars')
+const showAdminProductsTemplate = require('../templates/products-admin.handlebars')
 const showCartTemplate = require('../templates/cart.handlebars')
 const showCheckoutTemplate = require('../templates/checkout-cart.handlebars')
 // const orderApi = require('../orders/api')
@@ -76,6 +76,30 @@ const populateCheckout = function (event) {
 }
 
 const pushItemsToCart = function () {
+  const cartFix = []
+
+  store.cart.forEach(function (item) {
+    for (var i = 0; i < store.products.length; i++) {
+      if (store.products[i].id === item.product_id &&
+        store.products[i].status !== 'hidden') {
+        cartFix.push(item)
+      }
+    }
+  })
+  store.cart = cartFix
+  const id = store.currentOrder.id
+  if (store.cart.length === 0) {
+    // api request here delete
+    // create api
+  }
+  // else
+  const data = {
+    'order': {
+      'products': store.cart
+    }
+  }
+
+  api.finalizeOrder(data, id)
   store.total = 0
   const filteredData = productData.products.filter(function (item) {
     for (let i = 0; i < store.cart.length; i++) {
@@ -87,7 +111,6 @@ const pushItemsToCart = function () {
       }
     }
   })
-
   const showCartHTML = showCartTemplate({ products: filteredData })
   $('#cartTable tbody').empty()
   $('#cartTable tbody').append(showCartHTML)
@@ -101,6 +124,7 @@ const pushItemsToCart = function () {
 }
 
 const showAllProductsSuccess = function (data) {
+  store.products = []
   store.products = data.products
   const showProductsHTML = showProductsTemplate({ products: data.products })
   $('#productTable').show()
@@ -114,6 +138,20 @@ const showAllProductsSuccess = function (data) {
 
 const showAllProductsFailure = function () {
   // $('#UiFailure').text('something went wrong')
+}
+
+const sellerAdmin = function (data) {
+  const sellerProducts = []
+  for (let i = 0; i < store.products.length; i++) {
+    if (store.products[i]._owner === store.user.id) {
+      sellerProducts.push(store.products[i])
+    }
+  }
+  const showProductsHTML = showAdminProductsTemplate({ products: sellerProducts })
+  $('#productTableAdmin tbody').empty()
+  $('#productTableAdmin').show()
+  $('#productTableAdmin tbody').empty()
+  $('#productTableAdmin tbody').append(showProductsHTML)
 }
 
 // create a cart if there isn't one and if there is one then send a patch request to update the existing cart
@@ -153,12 +191,48 @@ const updateExistingCart = () => {
 const onUpdateExisitingCartSuccess = () => {
   $('#UiSuccess').text('Your cart has been updated').fadeIn('fast').delay(3000).fadeOut('slow')
 }
+
 const onUpdateExisitingCartFailure = () => {
   $('#UiFailure').text('Oops! Something went wrong!').fadeIn('fast').delay(3000).fadeOut('slow')
 }
+
+const createNewProductSuccess = (data) => {
+  $('#createProductModal').modal('hide')
+  $('.text-field-product').val('')
+  $('#UiSuccess').text('Create successful, now make more.').fadeIn('fast').delay(5000).fadeOut('slow')
+}
+
+const createNewProductFailure = (data) => {
+  $('#UiFailure').text('Oops! Something went wrong!').fadeIn('fast').delay(3000).fadeOut('slow')
+}
+
+const updateProductSuccess = data => {
+  $('#UiSuccess').text('Update successful now make more products.').fadeIn('fast').delay(5000).fadeOut('slow')
+}
+
+const updateProductFailure = data => {
+  $('#UiFailure').text('Oops! Something went wrong!').fadeIn('fast').delay(3000).fadeOut('slow')
+}
+
+const deleteProductSuccess = (data) => {
+  $('#UiSuccess').text('Delte successful now make more products.').fadeIn('fast').delay(5000).fadeOut('slow')
+}
+
+const deleteProductFailure = (data) => {
+  $('#UiFailure').text('Oops! Something went wrong!').fadeIn('fast').delay(3000).fadeOut('slow')
+}
+
 module.exports = {
   showAllProductsSuccess,
   showAllProductsFailure,
   carriageBoy,
-  pushItemsToCart
+  pushItemsToCart,
+  sellerAdmin,
+  createNewProductSuccess,
+  createNewProductFailure,
+  updateExistingCart,
+  updateProductSuccess,
+  updateProductFailure,
+  deleteProductSuccess,
+  deleteProductFailure
 }

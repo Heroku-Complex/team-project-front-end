@@ -5,6 +5,14 @@ body {
   background-color: #242629;
 }
 
+.activityhidden {
+  color: #f10;
+}
+
+.activitydefault-status {
+  color: #1f0;
+}
+
 th {
   white-space: nowrap;
 }
@@ -306,6 +314,7 @@ p {
 
 #cartPage,
 #checkoutPage,
+.productListAdmin,
 .productList,
 .previousOrderList {
   padding: 5px;

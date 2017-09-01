@@ -15,7 +15,42 @@ const showAllProducts = function () {
   })
 }
 
-module.exports = {
-  showAllProducts
+const createNewProduct = function (data) {
+  return $.ajax({
+    url: config.apiOrigin + '/products',
+    method: 'POST',
+    headers: {
+      Authorization: 'Token token=' + store.user.token
+    },
+    data: data
+  })
+}
 
+const updateProduct = function (data, id) {
+  return $.ajax({
+    url: config.apiOrigin + '/products/' + id,
+    method: 'PATCH',
+    headers: {
+      Authorization: 'Token token=' + store.user.token
+    },
+    data
+  })
+}
+
+const deleteProduct = (data, id) => {
+  return $.ajax({
+    url: config.apiOrigin + '/products/' + id,
+    method: 'DELETE',
+    headers: {
+      Authorization: 'Token token=' + store.user.token
+    },
+    data
+  })
+}
+
+module.exports = {
+  showAllProducts,
+  createNewProduct,
+  updateProduct,
+  deleteProduct
 }

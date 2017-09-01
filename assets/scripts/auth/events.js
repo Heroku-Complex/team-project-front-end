@@ -32,6 +32,7 @@ const onSignIn = (event) => {
     .then(ordersApi.showAllOrders)
     .then(ordersUi.showAllOrdersSuccess)
     .then(productsUi.carriageBoy)
+    .then(productsUi.sellerAdmin)
     .catch(productsUi.showAllProductsFailure)
 }
 

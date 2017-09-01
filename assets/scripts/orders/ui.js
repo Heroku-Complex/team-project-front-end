@@ -12,6 +12,9 @@ const cleanRyansFunction = function (order) {
         if (store.products[i].id === order.products[j].product_id) {
           order.products[j].name = store.products[i].name
         }
+        if (!order.products[j].name) {
+          order.products[j].name = 'Harmless kittens'
+        }
       }
     }
     const pojo = {
@@ -54,7 +57,7 @@ const updateOrderFailure = function () {
 const deleteOrderSuccess = (data) => {
 }
 
-const deleteOrderFailure= (data) => {
+const deleteOrderFailure = (data) => {
 
 }
 
@@ -64,5 +67,7 @@ module.exports = {
   addOrderSuccess,
   addOrderFailure,
   updateOrderSuccess,
-  updateOrderFailure
+  updateOrderFailure,
+  deleteOrderSuccess,
+  deleteOrderFailure
 }

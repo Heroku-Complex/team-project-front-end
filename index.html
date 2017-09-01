@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fencer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Do not add `link` tags unless you know what you are doing -->
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Orbitron" rel="stylesheet">
+  <!-- Do not add `script` tags unless you know what you are doing -->
+  <script src="https://use.fontawesome.com/b9279fc81b.js"></script>
+  <script src="public/vendor.js" type="text/javascript" charset="utf-8" defer></script>
+  <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
+</head>
+
+<body class="container-fluid">
+
+  <header class="header">
+
+      <!-- this is the drop down for menu items such as shopping cart and order history -->
+      <div class="dropdown pull-left logged-in">
+        <button class="dropbtn">Menu</button>
+          <div class="dropdown-content">
+            <a href="#" id="shoppingCartButton" class="logged-in"> Shopping Cart </a>
+            <a href="#" id="orderHistoryButton" class="logged-in"> Order History </a>
+            <a href="#" id="returnToProducts" class="logged-in"> Home </a>
+            <a href="#" id="adminSeller" class="logged-in"> Seller Menu </a>
+            <a href="#" data-toggle="modal" data-target="#changePwModal">Change Password</a>
+            <!-- <a href="#" data-target="#sign-out">sign out</a> -->
+          </div>
+    </div>
+    <nav>
+      <div class='logo'>
+        <h1 class="logged-out">Fencer</h1>
+        <a href="#" id="returnToProductsLogo" class="logged-in">         <h1>Fencer</h1> </a>
+        <h2>A Galactic Martketplace for Legitimately Acquired Goods</h2>
+        <h4 id="UiFailure" class="error-msg"></h4>
+        <h4 id="UiSuccess" class="success-msg"></h4>
+        <h5 id="confirm-purchase" class="purchaseConfirm error-msg"></h5>
+      </div>
+    </nav>
+
+    <div class="login-status">
+      <div class="logged-out">
+        <div class="signInError"></div>
+        <form id="sign-in">
+          <fieldset>
+            <input id='signin-email' class='text-field text-field-signin' type='text' placeholder='Email' name='credentials[email]'>
+            <input id='signin-pw' class='text-field text-field-signin' type='password' placeholder='Password' name='credentials[password]'>
+            <button id="showAllProductsOnSignIn" class="btn btn-primary btn-lg" type="submit">Sign in!</button>
+          </fieldset>
+        </form>
+        <p class="signup-prompt">Don't have an account?</p>
+        <button id="signup" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#signUpModal">
+      Sign Up!
+    </button><br><br>
+
+    <div class="sign-in-error-msg error-msg"></div>
+    </div>
+
+
+    <!-- sign out button body, the button has been moved to the 'menu' drop down -->
+    <div class="logged-in">
+      <div class="greeting"></div>
+      <form id="sign-out">
+        <fieldset>
+          <input type="submit" class="btn btn-primary btn-lg" name="submit" value="Sign Out">
+        </fieldset>
+      </form><br><br><br>
+    </div>
+  </div>
+</header>
+
+
+    <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Sign Up!</h4>
+          </div>
+          <div class="modal-body">
+            <form id="sign-up">
+              <fieldset>
+                <span class="star-required">*</span>&nbsp;&nbsp;<input class='pop-up-fields text-field text-field-signup' type='text' placeholder='Email' name='credentials[email]'> <br> <br>
+                <span id="signup-pw" class="star-required">*</span>&nbsp;&nbsp;<input class='pop-up-fields text-field text-field-signup' type='password' placeholder='Password' name='credentials[password]'><br> <br>
+                <span class="star-required">*</span>&nbsp;&nbsp;<input class='pop-up-fields text-field text-field-signup' type='password' placeholder='Re-enter Password' name='credentials[password_confirmation]'><br><br>
+                <button class="btn btn-primary btn-lg" type="submit">Sign up</button>
+              </fieldset><br>
+              <div class="sign-up-error-msg error-msg"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="changePwModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Change Password</h4>
+          </div>
+          <div class="modal-body">
+            <form id="change-pw">
+              <fieldset>
+                <input class='pop-up-fields text-field text-field-chpw' type='password' placeholder='Current Password' name='passwords[old]'> <br> <br>
+                <input class='pop-up-fields text-field text-field-chpw' type='password' placeholder='New Password' name='passwords[new]'><br> <br>
+                <button class="btn btn-primary btn-lg" type="submit">Change Password</button>
+              </fieldset><br>
+              <div class="change-pw-error-msg error-msg"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <div class="landingPage logged-in">
+    <!--  the class "logged-in" is what hides the product list when a user signs out, it is located in the auth/ui-->
+    <div class="productList logged-in">
+      <table id="productTable" class="table" data-toggle="table" data-sort-name="title" data-sort-order="desc">
+        <thead>
+          <tr>
+            <th data-field="image" data-sortable="false">
+              Image
+            </th>
+            <th data-field="name" data-sortable="true">
+              Name
+            </th>
+            <th data-field="price" data-sortable="true">
+              Price
+            </th>
+            <th data-field="category" data-sortable="true">
+              Category
+            </th>
+            <th data-field="description" data-sortable="false">
+              Description
+            </th>
+            <th data-field="rating" data-sortable="false">
+              Rating
+            </th>
+            <th data-field="edit-delete" data-sortable="false">
+              Add/Remove From Cart
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        <tfoot> </tfoot>
+      </table>
+    </div>
+  </div>
+
+    <div class="productListAdmin logged-in">
+      <table id="productTableAdmin" class="table" data-toggle="table" data-sort-name="title" data-sort-order="desc">
+        <thead>
+          <tr>
+            <th data-field="image" data-sortable="false">
+              Image
+            </th>
+            <th data-field="name" data-sortable="true">
+              Name
+            </th>
+            <th data-field="price" data-sortable="true">
+              Price
+            </th>
+            <th data-field="category" data-sortable="true">
+              Category
+            </th>
+            <th data-field="description" data-sortable="false">
+              Description
+            </th>
+            <th data-field="rating" data-sortable="false">
+              Rating
+            </th>
+            <th data-field="edit-delete" data-sortable="false">
+              Edit/Delete
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        <tfoot>
+          <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th><button type="button" name="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#createProductModal">Create New Product</button></th>
+        </tr>
+        </tfoot>
+      </table>
+    </div>
+
+  <div class="modal fade bs-edit-delete" id="editDeleteModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog modal-sm">
+
+      <div class="modal-content">
+
+        <form id="product-edit">
+
+          <fieldset>
+
+            <legend>Edit or Delete Product</legend>
+
+            <p>Keep most inputs to 200 characters or less.</p>
+
+            <textarea class="form-control hidden" id="id-store" maxlength="200"></textarea> <br>
+
+            Image Link<textarea class="form-control" id="image-link" maxlength="200"></textarea> <br>
+
+            Name<textarea class="form-control" id="name-text" maxlength="200"></textarea> <br>
+
+            Description<textarea class="form-control" id="description-text" maxlength="200"></textarea> <br>
+
+            Category<textarea class="form-control" id="category-text" maxlength="200"></textarea> <br>
+
+            Price<input min="1" max="9999" class='form-control' type="number" id="price-number" name='price-form' value="1"> <br>
+
+            Rating<input min="1" max="5" class='form-control' type="number" id="rating-number" name='rating-form' value="1"> <br>
+
+            Status:
+            <select name="status" id="status-check">
+              <option value="default-status" selected>Active</option>
+              <option value="hidden">Inactive</option>
+            </select> <br> <br>
+
+            <p>WARNING: Deleting a product, though allowed due to the of Fencer, is strongly frowned upon and may result in the suspension and banning of your accout. Instead, please select the inactive box if you are sold out and not a fugitive on the run.</p>
+
+            <button id="save-product-edit" name="save-edits" type="button" class="btn btn-primary" data-dismiss="modal">Save Edits</button>
+
+            <button id="delete-product" type="button" class="btn btn-primary" data-dismiss="modal">Delete Product</button>
+
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="createProductModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Create Product</h4>
+        </div>
+        <div class="modal-body">
+          <form id="create-product">
+            <fieldset>
+
+              <p>Keep most inputs to 200 characters or less.</p>
+
+              Image url<span class="star-required">*</span>&nbsp;&nbsp;<input class='pop-up-fields text-field text-field-product' type='text' placeholder='Image Url' id='create-image'> <br> <br>
+
+              Name<span class="star-required">*</span>&nbsp;&nbsp;<input class='pop-up-fields text-field text-field-product' type='text' maxlength="200" placeholder='Product Name' id='create-name'><br> <br>
+
+              Price<span class="star-required">*</span>&nbsp;&nbsp;<input class='pop-up-fields text-field text-field-product' type='number' placeholder='Price as a Number' id='create-price'><br><br>
+
+              Category<span class="star-required">*</span>&nbsp;&nbsp;<input class='pop-up-fields text-field text-field-product' type='text' maxlength="200" placeholder='Category' id='create-category'><br> <br>
+
+              Description<span class="star-required">*</span>&nbsp;&nbsp;<input class='pop-up-fields text-field text-field-product' type='text' maxlength="200" placeholder='Description' id='create-description'><br><br>
+
+              Rating<span class="star-required">*</span>&nbsp;&nbsp;<input class='pop-up-fields text-field text-field-product' min="1" max="5" placeholder="Rating" type="number" value="1" id='create-rating'><br><br>
+
+              <button class="btn btn-primary btn-lg" type="submit"> Create Product </button>
+            </fieldset><br>
+            <div class="sign-up-error-msg error-msg"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="previousOrdersTableDiv" class="previousOrderList logged-in">
+    <table id="previousOrderTable" class="table" data-toggle="table" data-sort-name="title" data-sort-order="desc">
+      <thead>
+        <tr>
+          <th data-field="date" data-sortable="true">
+            Date
+          </th>
+          <th data-field="items" data-sortable="false">
+            Items
+          </th>
+          <th data-field="total" data-sortable="true">
+            Total
+          </th>
+        </tr>
+      </thead>
+      <tbody id="prevOrderBody">
+      </tbody>
+    </table>
+  </div>
+
+<form id="updateCart">
+  <fieldset>
+    <input id="updateCart-id" class='pop-up-fields text-field' type="hidden" name='order[id]'>
+    <input class='pop-up-fields text-field' type="hidden" value="1990/01/01" name='order[date_placed]'>
+    <input class='pop-up-fields text-field' type="hidden" value="false" name='order[isOpen]'>
+    <input id="updateCart-userid" class='pop-up-fields text-field' type="hidden" name='order[user_id]'>
+  </fieldset>
+</form>
+
+
+
+<!-- this is the shopping cart -->
+<div class="cart-show logged-in" id="cartPage">
+  <div class="checkoutButton">
+    <div class="checkout pull-right">
+      <div class="payment">
+      </div>
+    </div>
+   </div>
+
+  <table id="cartTable" class="table" data-toggle="table" data-sort-name="title" data-sort-order="desc">
+    <thead>
+      <tr>
+        <th data-field="itemImage" data-sortable="false">
+          Image
+        </th>
+        <th data-field="itemName" data-sortable="true">
+          Name
+        </th>
+        <th data-field="price" data-sortable="true">
+          Price
+        </th>
+        <th data-field="quantity" data-sortable="true">
+          Quantity
+        </th>
+        <th data-field="subtotal" data-sortable="true">
+          Item Subtotal
+        </th>
+        <th data-field="edit-delete" data-sortable="false">
+          Remove Item
+        </th>
+      </tr>
+    </thead>
+    <!-- this empty tbody coupling is where the shoppingCart is appended. This is necessary to refresh the list. -->
+    <tbody>
+    </tbody>
+    <tfoot>
+    <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th>
+                  <button type="button" id="buttonBackToShopping" class="btn btn-primary pull-right">Back to Shopping</button>
+        </th>
+
+        <th>
+          <button type="button" id="buttonClearCart" class="btn btn-primary pull-right">Clear Cart</button>
+        </th>
+        <th>
+          <!-- On this button, we proceed to checkout. We calculate price and tota when this button is invoked. We calculate totals, store it in store.total -->
+          <button type="button" id="buttonProceedCheckout" class="btn btn-primary pull-right">Proceed to Checkout</button>
+        </th>
+
+    </tr>
+</tfoot>
+  </table>
+
+
+</div>
+
+
+
+<div id="checkoutPage" class="checkout-show logged-in">
+  <table id="checkoutTable" class="table" data-toggle="table" data-sort-name="title" data-sort-order="desc">
+    <thead>
+      <tr>
+        <th data-field="itemImage" data-sortable="false">
+          Image
+        </th>
+        <th data-field="itemName" data-sortable="true">
+          Name
+        </th>
+        <th data-field="price" data-sortable="true">
+          Price
+        </th>
+        <th data-field="quantity" data-sortable="true">
+          Quantity
+        </th>
+        <th data-field="subtotal" data-sortable="true">Item Subtotal</th>
+      </tr>
+    </thead>
+    <!-- this empty tbody coupling is where the shoppingCart is appended. This is necessary to refresh the list. -->
+    <tbody>
+    </tbody>
+    <tfoot>
+    <tr>
+        <th></th>
+        <th></th>
+        <th><button type="button" id="buttonBack" class="btn btn-primary pull-right">Back To Cart</button></th>
+        <th id="totalMoneySuckerPays"></th>
+        <th>
+          <script src="https://checkout.stripe.com/checkout.js"></script>
+          <button type="button" id="buttonCheckout" class="btn btn-primary pull-right">Checkout</button>
+        </th>
+    </tr>
+  </tfoot>
+  </table>
+
+</div>
+
+
+  <footer class="page-bottom">
+    <p>Created By Myles Kaeding, Nicholas Piaskoski, Brad Leyden, and Ryan Koch</p>
+
+</footer>
+</body>
+</html>
